@@ -1,0 +1,127 @@
+{
+  "actions": [],
+  "autoname": "format:transaction_id",
+  "creation": "2025-01-01 00:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "account",
+    "transaction_id",
+    "transaction_type",
+    "transaction_icon",
+    "category",
+    "amount",
+    "currency",
+    "date", 
+    "merchant_entity_id",
+    "merchant_name", 
+    "confidence_level",
+    "detailed", 
+    "pending",
+    "website"
+  ],
+  "fields": [
+    {
+      "fieldname": "account",
+      "label": "Plaid Account",
+      "fieldtype": "Link",
+      "options": "Plaid Account",
+      "reqd": 1
+    },
+    {
+      "fieldname": "transaction_id",
+      "label": "Transaction ID",
+      "fieldtype": "Data",
+      "unique": 1,
+      "reqd": 1
+    },
+    {
+      "fieldname": "transaction_type",
+      "label": "Transaction Type",
+      "fieldtype": "Select",
+      "options": "Debit\nCredit",
+      "reqd": 1
+    },
+    {
+      "fieldname": "transaction_icon",
+      "label": "Transaction Icon",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "category",
+      "label": "Category",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "amount",
+      "label": "Amount",
+      "fieldtype": "Currency"
+    },
+    {
+      "fieldname": "currency",
+      "label": "Currency",
+      "fieldtype": "Data",
+      "default": "USD"
+    },
+    {
+      "fieldname": "date",
+      "label": "Date",
+      "fieldtype": "Date"
+    },
+    {
+      "fieldname": "merchant_entity_id",
+      "label": "Merchant Entity ID",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "merchant_name",
+      "label": "Merchant Name",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "confidence_level",
+      "label": "Confidence Level",
+      "fieldtype": "Select",
+      "options": "VERY_HIGH\nHIGH\nMEDIUM\nLOW\nUNKNOWN"
+    },
+    {
+      "fieldname": "detailed",
+      "label": "Detailed Category",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "pending",
+      "label": "Pending",
+      "fieldtype": "Check"
+    },
+    {
+      "fieldname": "website",
+      "label": "Website",
+      "fieldtype": "Data"
+    }
+  ],  
+  "links": [],
+  "modified": "2025-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "IPCONNEX Plaid",
+  "name": "Plaid Transaction",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "quick_entry": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC"
+}

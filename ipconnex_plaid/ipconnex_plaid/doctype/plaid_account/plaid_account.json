@@ -1,0 +1,92 @@
+{
+  "actions": [],
+  "autoname": "format:account_name",
+  "creation": "2024-04-09 00:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "track_changes": 0,
+  "field_order": [
+    "account_name",
+    "item_id",
+    "access_token",
+    "institution_name",
+    "status"
+  ],
+  "fields": [
+    {
+      "fieldname": "account_name",
+      "label": "Account Name",
+      "fieldtype": "Data",
+      "reqd": 1
+    },
+    {
+      "fieldname": "item_id",
+      "label": "Plaid Item ID",
+      "fieldtype": "Data",
+      "unique": 1
+    },
+    {
+      "fieldname": "client_id",
+      "label": "Client Id",
+      "fieldtype": "Password"
+    },
+    {
+      "fieldname": "client_secret",
+      "label": "Client Secret",
+      "fieldtype": "Password"
+    },
+    {
+      "fieldname": "public_token",
+      "label": "public_token",
+      "fieldtype": "Password"
+    },
+    {
+      "fieldname": "access_token",
+      "label": "access_token",
+      "fieldtype": "Password"
+    },
+    {
+      "fieldname": "institution_name",
+      "label": "Institution",
+      "fieldtype": "Data"
+    },
+    {
+      "fieldname": "institution_id",
+      "label": "Institution ID",
+      "fieldtype": "Password"
+    },
+    {
+      "fieldname": "status",
+      "label": "Status",
+      "fieldtype": "Select",
+      "options": "\nActive\nInactive\nError"
+    }
+  ],
+  "links": [],
+  "modified": "2023-12-10 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "IPCONNEX Plaid",
+  "name": "Plaid Account",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "list_view": {
+    "fields": [
+    ]
+  },
+  "sort_field": "modified",
+  "sort_order": "DESC"
+}
