@@ -18,8 +18,6 @@ from plaid.model.transactions_get_request import TransactionsGetRequest
 
 @frappe.whitelist(allow_guest=True) 
 def plaid_test(client_id,client_secret):
-    """Example API that uses Plaid v3.2.0 client"""
-    return "DONE"
     # init client (dummy credentials just for example)
     configuration = Configuration(
         host="https://sandbox.plaid.com",
