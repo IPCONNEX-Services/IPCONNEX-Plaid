@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.utils import flt 
-from vendor.vendor_loader import use_vendor
+from ipconnex_plaid.vendor_loader import use_vendor
 use_vendor()
 
 from plaid.api import plaid_api
