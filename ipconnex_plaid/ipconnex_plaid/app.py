@@ -19,7 +19,7 @@ from plaid.model.transactions_get_request import TransactionsGetRequest
 @frappe.whitelist(allow_guest=True) 
 def plaid_test(client_id,client_secret):
     """Example API that uses Plaid v3.2.0 client"""
-    
+    return "DONE"
     # init client (dummy credentials just for example)
     configuration = Configuration(
         host="https://sandbox.plaid.com",
@@ -39,5 +39,5 @@ def plaid_test(client_id,client_secret):
 
     public_response = client.sandbox_public_token_create(sandbox_request)
     public_token=public_response["public_token"]
-    return public_response
+    return public_token
 
