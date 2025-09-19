@@ -17,9 +17,6 @@ app_license = "MIT"
 # ---------------
 
 scheduler_events = {
-    "hourly": [
-        "ipconnex_plaid.ipconnex_plaid.payement.hourly_process_payment",
-    ]
 }
 
 #app_install = "ipconnex_stripe_payment.ipconnex_stripe_payment.payement.setup_install"
