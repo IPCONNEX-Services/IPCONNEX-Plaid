@@ -9,13 +9,13 @@
   "field_order": [
       "account_name",
       "account_type",
+      "status",
       "client_id",
       "client_secret",
       "public_token",
       "access_token",
       "institution_name",
-      "institution_id",
-      "status"
+      "institution_id"
   ],
   "fields": [
     {
@@ -31,6 +31,12 @@
       "options": "Sandbox\nDevelopment\nProduction"
     },
     {
+      "fieldname": "status",
+      "label": "Status",
+      "fieldtype": "Select",
+      "options": "\nActive\nInactive\nError"
+    },
+    {
       "fieldname": "client_id",
       "label": "Client ID",
       "fieldtype": "Password"
@@ -42,12 +48,12 @@
     },
     {
       "fieldname": "public_token",
-      "label": "public_token",
+      "label": "Public Token",
       "fieldtype": "Password"
     },
     {
       "fieldname": "access_token",
-      "label": "access_token",
+      "label": "Access Token",
       "fieldtype": "Password"
     },
     {
@@ -59,12 +65,6 @@
       "fieldname": "institution_id",
       "label": "Institution ID",
       "fieldtype": "Password"
-    },
-    {
-      "fieldname": "status",
-      "label": "Status",
-      "fieldtype": "Select",
-      "options": "\nActive\nInactive\nError"
     }
   ],
   "links": [],
