@@ -16,8 +16,7 @@ from plaid.model.transactions_get_request import TransactionsGetRequest
 
 
 @frappe.whitelist(allow_guest=True) 
-
-def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
+def getTransactions(client_id, client_secret, access_token, days, mode="sandbox"):
     # choose environment
     hosts = {
         "sandbox": "https://sandbox.plaid.com",
@@ -25,7 +24,6 @@ def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
         "production": "https://production.plaid.com",
     }
     host = hosts.get(mode.lower(), "https://sandbox.plaid.com")  # fallback sandbox
-
     # init client
     configuration = Configuration(
         host=host,
@@ -46,7 +44,7 @@ def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
 
     # calculate date range
     end_date = date.today()
-    start_date = end_date - timedelta(days=days)
+    start_date = end_date - timedelta(days=int(days))
 
     # list to hold all transactions
     all_transactions = []
@@ -77,3 +75,13 @@ def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
         offset += count
 
     return all_transactions, len(all_transactions)
+
+
+
+
+
+
+
+
+
+
