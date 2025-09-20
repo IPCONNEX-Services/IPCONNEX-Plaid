@@ -1,6 +1,6 @@
 {
   "actions": [],
-  "autoname": "format:account_name",
+  "autoname": "format:{account_name}",
   "creation": "2024-04-09 00:00:00.000000",
   "doctype": "DocType",
   "editable_grid": 1,
@@ -8,7 +8,7 @@
   "track_changes": 0,
   "field_order": [
       "account_name",
-      "item_id",
+      "account_type",
       "client_id",
       "client_secret",
       "public_token",
@@ -25,14 +25,14 @@
       "reqd": 1
     },
     {
-      "fieldname": "item_id",
-      "label": "Plaid Item ID",
-      "fieldtype": "Data",
-      "unique": 1
+      "fieldname": "account_type",
+      "label": "Status",
+      "fieldtype": "Select",
+      "options": "Sandbox\nDevelopment\nProduction"
     },
     {
       "fieldname": "client_id",
-      "label": "Client Id",
+      "label": "Client ID",
       "fieldtype": "Password"
     },
     {

@@ -17,8 +17,23 @@ from plaid.model.transactions_get_request import TransactionsGetRequest
 
 @frappe.whitelist(allow_guest=True) 
 
-def plaid_test(client_id, client_secret, access_token, days):
+def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
+    # choose environment
+    hosts = {
+        "sandbox": "https://sandbox.plaid.com",
+        "development": "https://development.plaid.com",
+        "production": "https://production.plaid.com",
+    }
+    host = hosts.get(mode, "https://sandbox.plaid.com")  # fallback sandbox
+
     # init client
+    configuration = Configuration(
+        host=host,
+        api_key={
+            "clientId": client_id,
+            "secret": client_secret
+        }
+    )
     configuration = Configuration(
         host="https://sandbox.plaid.com",
         api_key={
