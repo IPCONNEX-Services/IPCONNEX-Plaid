@@ -16,7 +16,7 @@ from plaid.model.transactions_get_request import TransactionsGetRequest
 
 
 @frappe.whitelist(allow_guest=True) 
-def plaid_test(client_id,client_secret):
+def plaid_test(client_id,client_secret,access_token):
     # init client (dummy credentials just for example)
     configuration = Configuration(
         host="https://sandbox.plaid.com",
@@ -27,12 +27,14 @@ def plaid_test(client_id,client_secret):
     )
     api_client = ApiClient(configuration)
     client = plaid_api.PlaidApi(api_client)
-    # Call a simple Plaid method (e.g., categories)
-    sandbox_request = SandboxPublicTokenCreateRequest(
-        institution_id="ins_109508",  # Example sandbox institution
-        initial_products=[Products("transactions")]  # ✅ Use Products enum instead of string
+    # Build request
+    request = TransactionsGetRequest(
+        access_token=access_token,
+        start_date=date(2020, 9, 1),   
+        end_date=date(2025, 9, 15),   
     )
-    public_response = client.sandbox_public_token_create(sandbox_request)
-    public_token=public_response["public_token"]
-    return public_token
-
+    # Call API
+    response = client.transactions_get(request)
+    # Parse transactions
+    transactions = response['transactions']
+    return [t.to_dict() for t in transactions ]
