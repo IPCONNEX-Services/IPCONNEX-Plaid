@@ -24,7 +24,7 @@ def plaid_test(client_id, client_secret, access_token, days, mode="sandbox"):
         "development": "https://development.plaid.com",
         "production": "https://production.plaid.com",
     }
-    host = hosts.get(mode, "https://sandbox.plaid.com")  # fallback sandbox
+    host = hosts.get(mode.lower(), "https://sandbox.plaid.com")  # fallback sandbox
 
     # init client
     configuration = Configuration(
