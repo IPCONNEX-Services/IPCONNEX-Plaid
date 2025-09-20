@@ -7,11 +7,15 @@
   "engine": "InnoDB",
   "track_changes": 0,
   "field_order": [
-    "account_name",
-    "item_id",
-    "access_token",
-    "institution_name",
-    "status"
+      "account_name",
+      "item_id",
+      "client_id",
+      "client_secret",
+      "public_token",
+      "access_token",
+      "institution_name",
+      "institution_id",
+      "status"
   ],
   "fields": [
     {
