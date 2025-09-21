@@ -132,6 +132,7 @@ def loadTransactions(doc,method):
 
 
 
+@frappe.whitelist() 
 def autoUpdatePlaid():
     plaid_accounts=frappe.get_all("Plaid Account",fields=["name"],filters={"status": "Active"})
     for pa in plaid_accounts : 
