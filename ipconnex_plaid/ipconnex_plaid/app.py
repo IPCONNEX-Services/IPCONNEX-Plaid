@@ -79,7 +79,7 @@ def getTransactions(client_id, client_secret, access_token, days, mode="sandbox"
 @frappe.whitelist() 
 def autoUpdatePlaid():
     plaid_accounts=frappe.get_all("Plaid Account",fields=["name"],filters={"status": "Active"})
-    result=[]
+
     for pa in plaid_accounts : 
         plaid_account=frappe.get_doc("Plaid Account",pa["name"])
         transactions =getTransactions(
@@ -88,16 +88,7 @@ def autoUpdatePlaid():
                 access_token=plaid_account.get_password("access_token"), 
                 days=plaid_account.refresh_days, 
                 mode=plaid_account.account_type)
-        result.append(
-                {"client_id":plaid_account.get_password("client_id"), 
-                "client_secret":plaid_account.get_password("client_secret"), 
-                "access_token":plaid_account.get_password("access_token"), 
-                "days":plaid_account.refresh_days, 
-                "mode":plaid_account.account_type})
-    return result
-    """
         for transaction in transactions :
-
             t_date=date.today()
             if transaction["date"]:
                 t_date=transaction["date"]
@@ -130,8 +121,9 @@ def autoUpdatePlaid():
                 for field, value in data.items():
                     frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
             else:
+                data["doctype"]="Plaid Transaction"
                 doc = frappe.get_doc(data)
-                doc.insert()"""
+                doc.insert()
 
 
 
