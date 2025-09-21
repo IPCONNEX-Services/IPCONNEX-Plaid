@@ -76,6 +76,7 @@ def getTransactions(client_id, client_secret, access_token, days, mode="sandbox"
 
     return all_transactions
 
+@frappe.whitelist() 
 def loadTransactions(doc,method):
     days_count = (date.today() - date(2020, 1, 1)).days
     plaid_account=frappe.get_doc("Plaid Account",doc.name)
