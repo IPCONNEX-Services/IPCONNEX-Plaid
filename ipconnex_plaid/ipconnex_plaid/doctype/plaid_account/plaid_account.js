@@ -4,7 +4,7 @@ document.head.appendChild(script);
 
 frappe.ui.form.on("Plaid Account", {
   refresh: function (frm) {
-    frm.add_custom_button(__("Pay Invoice"), function (event) {
+    frm.add_custom_button(__("Update"), function (event) {
       $('button[data-label="Pay%20Invoice"]').prop("disabled", true);
       frappe.call({
         method: "ipconnex_plaid.ipconnex_plaid.app.updatePlaidAccount",
