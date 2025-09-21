@@ -101,9 +101,9 @@ def autoUpdatePlaid():
                     t_confidence=transaction["personal_finance_category"]["confidence_level"]
                 if transaction["personal_finance_category"]["detailed"]:
                    t_detailed=transaction["personal_finance_category"]["detailed"]
-            if ["counterparties"]:
-                if ["counterparties"]["logo_url"]:
-                    t_icon=transaction["counterparties"]["logo_url"]
+            if len(transaction["counterparties"]):
+                if transaction["counterparties"][0]["logo_url"]:
+                    t_icon=transaction["counterparties"][0]["logo_url"]
             data={
                 "account":pa["name"],
                 "account_id":transaction["account_id"],
