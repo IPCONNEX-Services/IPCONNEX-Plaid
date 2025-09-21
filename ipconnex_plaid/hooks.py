@@ -23,5 +23,4 @@ doc_events = {
         "after_insert": "ipconnex_plaid.ipconnex_plaid.app.loadTransactions"
     },    
 }
-#app_install = "ipconnex_stripe_payment.ipconnex_stripe_payment.payement.setup_install"
 
