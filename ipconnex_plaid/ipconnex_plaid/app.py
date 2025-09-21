@@ -131,6 +131,79 @@ def loadTransactions(doc,method):
         except :
             pass
 
+
+
+@frappe.whitelist() 
+def updatePlaidAccount(doc_name):
+    has_access = len( frappe.get_list("Plaid Account",fields=["name"],filters={"name":doc_name})) >0
+    if has_access:
+        plaid_account=frappe.get_doc("Plaid Account",doc_name)
+        transactions =getTransactions(
+                client_id=plaid_account.get_password("client_id"), 
+                client_secret=plaid_account.get_password("client_secret"), 
+                access_token=plaid_account.get_password("access_token"), 
+                days=plaid_account.refresh_days, 
+                mode=plaid_account.account_type)
+        for transaction in transactions :
+            try:
+                
+                t_date=date.today()
+                if transaction["date"]:
+                    t_date=transaction["date"]
+                t_confidence = "UNKNOWN"
+                t_detailed = ""
+                t_icon=""
+                if transaction["personal_finance_category"]:
+                    if transaction["personal_finance_category"]["confidence_level"]:
+                        t_confidence=transaction["personal_finance_category"]["confidence_level"]
+                    if transaction["personal_finance_category"]["detailed"]:
+                        t_detailed=transaction["personal_finance_category"]["detailed"]
+                if len(transaction["counterparties"]):
+                    if transaction["counterparties"][0]["logo_url"]:
+                        t_icon=transaction["counterparties"][0]["logo_url"]
+                data={
+                    "account":plaid_account.name,
+                    "account_id": transaction.get("account_id", ""),
+                    "transaction_id": transaction.get("transaction_id", ""),
+                    "transaction_type": "Debit" if transaction.get("amount", 0) < 0 else "Credit",
+                    "transaction_icon": t_icon or "",
+                    "category": ",".join(transaction.get("category", [])) if transaction.get("category") else "",
+                    "amount": transaction.get("amount", 0),
+                    "currency": transaction.get("iso_currency_code", ""),
+                    "date": t_date.strftime("%Y-%m-%d") if t_date else "",
+                    "merchant_entity_id": transaction.get("merchant_entity_id") or "",
+                    "merchant_name": transaction.get("merchant_name") or "",
+                    "confidence_level": t_confidence or "",
+                    "detailed": t_detailed or "",
+                    "pending": transaction.get("pending", False),
+                    "website": transaction.get("website") or ""
+                }
+                
+                t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
+                if frappe.db.exists("Plaid Transaction", t_name):
+                    transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
+                    transaction_doc.update(data)
+                    transaction_doc.save()
+                else:
+                    data["doctype"]="Plaid Transaction"
+                    doc = frappe.get_doc(data)
+                    doc.insert()
+            except :
+                pass
+        return {"status":1,"message":"Updated"}
+    else : 
+        return {"status":0,"message":"Not Found"}
+
+
+
+
+
+
+
+
+
+
+
 @frappe.whitelist() 
 def autoUpdatePlaid():
     plaid_accounts=frappe.get_all("Plaid Account",fields=["name"],filters={"status": "Active"})
