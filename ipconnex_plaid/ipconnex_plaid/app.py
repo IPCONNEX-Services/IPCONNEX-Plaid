@@ -93,19 +93,23 @@ def autoUpdatePlaid():
             if transaction["date"]:
                 t_date=transaction["date"]
             t_confidence = "UNKNOWN"
-            t_detailed = "UNKNOWN"
+            t_detailed = ""
+            t_icon=""
+
             if transaction["personal_finance_category"]:
                 if transaction["personal_finance_category"]["confidence_level"]:
                     t_confidence=transaction["personal_finance_category"]["confidence_level"]
                 if transaction["personal_finance_category"]["detailed"]:
                    t_detailed=transaction["personal_finance_category"]["detailed"]
-
+            if ["counterparties"]:
+                if ["counterparties"]["logo_url"]:
+                    t_icon=transaction["counterparties"]["logo_url"]
             data={
                 "account":pa["name"],
                 "account_id":transaction["account_id"],
                 "transaction_id":transaction["transaction_id"],
                 "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
-                "transaction_icon":transaction["counterparties"]["logo_url"],
+                "transaction_icon":t_icon,
                 "category":",".join(transaction["category"]),
                 "amount":transaction["amount"],
                 "currency":transaction["iso_currency_code"],
