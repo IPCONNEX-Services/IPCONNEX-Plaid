@@ -75,7 +75,7 @@
   "links": [
     {
       "link_doctype": "Plaid Transaction",
-      "link_fieldname": "plaid_account"
+      "link_fieldname": "account"
     }
   ],
   "modified": "2023-12-10 00:00:00.000000",
