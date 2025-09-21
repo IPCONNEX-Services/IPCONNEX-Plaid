@@ -118,10 +118,12 @@ def loadTransactions(doc,method):
                 "pending": transaction.get("pending", False),
                 "website": transaction.get("website") or ""
             }
-            if frappe.db.exists("Plaid Transaction", transaction["transaction_id"]):
+            
+            t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
+            if frappe.db.exists("Plaid Transaction", t_name):
                 for field, value in data.items():
                     if (field in ["pending"]):
-                        frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
+                        frappe.db.set_value("Plaid Transaction",t_name, field, value)
             else:
                 data["doctype"]="Plaid Transaction"
                 doc = frappe.get_doc(data)
@@ -175,9 +177,11 @@ def autoUpdatePlaid():
                         "pending": transaction.get("pending", False),
                         "website": transaction.get("website") or ""
                     }
-                    if frappe.db.exists("Plaid Transaction", transaction["transaction_id"]):
+                    t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
+                    if frappe.db.exists("Plaid Transaction", t_name):
                         for field, value in data.items():
-                            frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
+                            if (field in ["pending"]):
+                                frappe.db.set_value("Plaid Transaction", t_name, field, value)
                     else:
                         data["doctype"]="Plaid Transaction"
                         doc = frappe.get_doc(data)
