@@ -7,6 +7,7 @@
   "engine": "InnoDB",
   "field_order": [
     "account",
+    "account_id",
     "transaction_id",
     "transaction_type",
     "transaction_icon",
@@ -26,15 +27,17 @@
       "fieldname": "account",
       "label": "Plaid Account",
       "fieldtype": "Link",
-      "options": "Plaid Account",
-      "reqd": 1
+      "options": "Plaid Account"
+    },
+    {
+      "fieldname": "account_id",
+      "label": "Account ID",
+      "fieldtype": "Data"
     },
     {
       "fieldname": "transaction_id",
       "label": "Transaction ID",
-      "fieldtype": "Data",
-      "unique": 1,
-      "reqd": 1
+      "fieldtype": "Data"
     },
     {
       "fieldname": "transaction_type",

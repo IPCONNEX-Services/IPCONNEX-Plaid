@@ -31,6 +31,11 @@
       "options": "Sandbox\nDevelopment\nProduction"
     },
     {
+      "fieldname": "refresh_days",
+      "label": "Refresh days",
+      "fieldtype": "Int"
+    },
+    {
       "fieldname": "status",
       "label": "Status",
       "fieldtype": "Select",

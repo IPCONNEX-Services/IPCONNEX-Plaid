@@ -74,10 +74,54 @@ def getTransactions(client_id, client_secret, access_token, days, mode="sandbox"
         # Move to next batch
         offset += count
 
-    return all_transactions, len(all_transactions)
+    return all_transactions
 
+@frappe.whitelist(allow_guest=True) 
+def autoUpdatePlaid():
+    plaid_accounts=frappe.get_all("Plaid Account",fields=["name"],filters={"status": "Active"})
+    for pa in plaid_accounts : 
+        plaid_account=frappe.get_doc("Plaid Account",pa["name"])
+        transactions =getTransactions(
+                client_id=plaid_account.get_password("client_secret"), 
+                client_secret=plaid_account.get_password("client_secret"), 
+                access_token=plaid_account.get_password("client_secret"), 
+                days=plaid_account.refresh_days, 
+                mode=plaid_account.account_type)
+        for transaction in transactions :
+            t_date=date.today()
+            if transaction["date"]:
+                t_date=transaction["date"]
+            t_confidence = "UNKNOWN"
+            t_detailed = "UNKNOWN"
+            if transaction["personal_finance_category"]:
+                if transaction["personal_finance_category"]["confidence_level"]:
+                    t_confidence=transaction["personal_finance_category"]["confidence_level"]
+                if transaction["personal_finance_category"]["detailed"]:
+                   t_detailed=transaction["personal_finance_category"]["detailed"]
 
-
+            data={
+                "account":pa["name"],
+                "account_id":transaction["account_id"],
+                "transaction_id":transaction["transaction_id"],
+                "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
+                "transaction_icon":transaction["counterparties"]["logo_url"],
+                "category":",".join(transaction["category"]),
+                "amount":transaction["amount"],
+                "currency":transaction["iso_currency_code"],
+                "date":t_date.strftime("%Y-%m-%d") , 
+                "merchant_entity_id":transaction["merchant_entity_id"],
+                "merchant_name":transaction["merchant_name"],
+                "confidence_level":t_confidence,
+                "detailed":t_detailed, 
+                "pending":transaction["pending"],
+                "website":transaction["website"]
+            }
+            if frappe.db.exists("Plaid Account", transaction["transaction_id"]):
+                for field, value in data.items():
+                    frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
+            else:
+                doc = frappe.get_doc(data)
+                doc.insert()
 
 
 
