@@ -76,7 +76,6 @@ def getTransactions(client_id, client_secret, access_token, days, mode="sandbox"
 
     return all_transactions
 
-@frappe.whitelist() 
 def loadTransactions(doc,method):
     days_count = (date.today() - date(2020, 1, 1)).days
     plaid_account=frappe.get_doc("Plaid Account",doc.name)
@@ -103,7 +102,7 @@ def loadTransactions(doc,method):
                 if transaction["counterparties"][0]["logo_url"]:
                     t_icon=transaction["counterparties"][0]["logo_url"]
             data={
-                "account":doc.name,
+                "account":plaid_account.name,
                 "account_id":transaction["account_id"],
                 "transaction_id":transaction["transaction_id"],
                 "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
