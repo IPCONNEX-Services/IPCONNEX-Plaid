@@ -103,7 +103,7 @@ def loadTransactions(doc,method):
                 if transaction["counterparties"][0]["logo_url"]:
                     t_icon=transaction["counterparties"][0]["logo_url"]
             data={
-                "account":pa["name"],
+                "account":doc.name,
                 "account_id":transaction["account_id"],
                 "transaction_id":transaction["transaction_id"],
                 "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
@@ -121,7 +121,8 @@ def loadTransactions(doc,method):
             }
             if frappe.db.exists("Plaid Transaction", transaction["transaction_id"]):
                 for field, value in data.items():
-                    frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
+                    if (field in ["pending"]):
+                        frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
             else:
                 data["doctype"]="Plaid Transaction"
                 doc = frappe.get_doc(data)
