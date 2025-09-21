@@ -1,6 +1,6 @@
 {
   "actions": [],
-  "autoname": "format:{transaction_id}",
+  "autoname": "format:{account_id}-{transaction_id}",
   "creation": "2025-01-01 00:00:00.000000",
   "doctype": "DocType",
   "editable_grid": 1,
@@ -14,11 +14,11 @@
     "category",
     "amount",
     "currency",
-    "date", 
+    "date",
     "merchant_entity_id",
-    "merchant_name", 
+    "merchant_name",
     "confidence_level",
-    "detailed", 
+    "detailed",
     "pending",
     "website"
   ],
@@ -32,19 +32,22 @@
     {
       "fieldname": "account_id",
       "label": "Account ID",
-      "fieldtype": "Data"
+      "fieldtype": "Data",
+      "search_index": 1
     },
     {
       "fieldname": "transaction_id",
       "label": "Transaction ID",
-      "fieldtype": "Data"
+      "fieldtype": "Data",
+      "search_index": 1
     },
     {
       "fieldname": "transaction_type",
       "label": "Transaction Type",
       "fieldtype": "Select",
       "options": "Debit\nCredit",
-      "reqd": 1
+      "reqd": 1,
+      "search_index": 1
     },
     {
       "fieldname": "transaction_icon",
@@ -70,7 +73,8 @@
     {
       "fieldname": "date",
       "label": "Date",
-      "fieldtype": "Date"
+      "fieldtype": "Date",
+      "search_index": 1
     },
     {
       "fieldname": "merchant_entity_id",
@@ -103,7 +107,7 @@
       "label": "Website",
       "fieldtype": "Data"
     }
-  ],  
+  ],
   "links": [],
   "modified": "2025-01-01 00:00:00.000000",
   "modified_by": "Administrator",

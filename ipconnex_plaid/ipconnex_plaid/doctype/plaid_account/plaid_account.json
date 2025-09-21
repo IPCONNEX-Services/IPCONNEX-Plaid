@@ -7,15 +7,15 @@
   "engine": "InnoDB",
   "track_changes": 0,
   "field_order": [
-      "account_name",
-      "account_type",
-      "status",
-      "client_id",
-      "client_secret",
-      "public_token",
-      "access_token",
-      "institution_name",
-      "institution_id"
+    "account_name",
+    "account_type",
+    "status",
+    "client_id",
+    "client_secret",
+    "public_token",
+    "access_token",
+    "institution_name",
+    "institution_id"
   ],
   "fields": [
     {
@@ -72,7 +72,12 @@
       "fieldtype": "Password"
     }
   ],
-  "links": [],
+  "links": [
+    {
+      "link_doctype": "Plaid Transaction",
+      "link_fieldname": "plaid_account"
+    }
+  ],
   "modified": "2023-12-10 00:00:00.000000",
   "modified_by": "Administrator",
   "module": "IPCONNEX Plaid",
@@ -93,8 +98,7 @@
     }
   ],
   "list_view": {
-    "fields": [
-    ]
+    "fields": []
   },
   "sort_field": "modified",
   "sort_order": "DESC"

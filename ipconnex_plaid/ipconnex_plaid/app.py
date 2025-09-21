@@ -129,9 +129,6 @@ def loadTransactions(doc,method):
         except :
             pass
 
-
-
-
 @frappe.whitelist() 
 def autoUpdatePlaid():
     plaid_accounts=frappe.get_all("Plaid Account",fields=["name"],filters={"status": "Active"})
