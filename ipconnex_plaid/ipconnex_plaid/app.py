@@ -121,7 +121,7 @@ def autoUpdatePlaid():
                 "pending":transaction["pending"],
                 "website":transaction["website"]
             }
-            if frappe.db.exists("Plaid Account", transaction["transaction_id"]):
+            if len(frappe.get_all("Plaid Account",fields=["name"],filters={ "transaction_id":transaction["transaction_id"]} )) :
                 for field, value in data.items():
                     frappe.db.set_value("Plaid Transaction", transaction["transaction_id"], field, value)
             else:
