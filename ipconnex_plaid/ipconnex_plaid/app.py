@@ -103,20 +103,20 @@ def loadTransactions(doc,method):
                     t_icon=transaction["counterparties"][0]["logo_url"]
             data={
                 "account":plaid_account.name,
-                "account_id":transaction["account_id"],
-                "transaction_id":transaction["transaction_id"],
-                "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
-                "transaction_icon":t_icon,
-                "category":",".join(transaction["category"]),
-                "amount":transaction["amount"],
-                "currency":transaction["iso_currency_code"],
-                "date":t_date.strftime("%Y-%m-%d") , 
-                "merchant_entity_id":transaction["merchant_entity_id"],
-                "merchant_name":transaction["merchant_name"],
-                "confidence_level":t_confidence,
-                "detailed":t_detailed, 
-                "pending":transaction["pending"],
-                "website":transaction["website"]
+                "account_id": transaction.get("account_id", ""),
+                "transaction_id": transaction.get("transaction_id", ""),
+                "transaction_type": "Debit" if transaction.get("amount", 0) < 0 else "Credit",
+                "transaction_icon": t_icon or "",
+                "category": ",".join(transaction.get("category", [])) if transaction.get("category") else "",
+                "amount": transaction.get("amount", 0),
+                "currency": transaction.get("iso_currency_code", ""),
+                "date": t_date.strftime("%Y-%m-%d") if t_date else "",
+                "merchant_entity_id": transaction.get("merchant_entity_id") or "",
+                "merchant_name": transaction.get("merchant_name") or "",
+                "confidence_level": t_confidence or "",
+                "detailed": t_detailed or "",
+                "pending": transaction.get("pending", False),
+                "website": transaction.get("website") or ""
             }
             if frappe.db.exists("Plaid Transaction", transaction["transaction_id"]):
                 for field, value in data.items():
@@ -163,20 +163,20 @@ def autoUpdatePlaid():
                             t_icon=transaction["counterparties"][0]["logo_url"]
                     data={
                         "account":pa["name"],
-                        "account_id":transaction["account_id"],
-                        "transaction_id":transaction["transaction_id"],
-                        "transaction_type":"Debit" if  transaction["amount"] < 0 else "Credit",
-                        "transaction_icon":t_icon,
-                        "category":",".join(transaction["category"]),
-                        "amount":transaction["amount"],
-                        "currency":transaction["iso_currency_code"],
-                        "date":t_date.strftime("%Y-%m-%d") , 
-                        "merchant_entity_id":transaction["merchant_entity_id"],
-                        "merchant_name":transaction["merchant_name"],
-                        "confidence_level":t_confidence,
-                        "detailed":t_detailed, 
-                        "pending":transaction["pending"],
-                        "website":transaction["website"]
+                        "account_id": transaction.get("account_id", ""),
+                        "transaction_id": transaction.get("transaction_id", ""),
+                        "transaction_type": "Debit" if transaction.get("amount", 0) < 0 else "Credit",
+                        "transaction_icon": t_icon or "",
+                        "category": ",".join(transaction.get("category", [])) if transaction.get("category") else "",
+                        "amount": transaction.get("amount", 0),
+                        "currency": transaction.get("iso_currency_code", ""),
+                        "date": t_date.strftime("%Y-%m-%d") if t_date else "",
+                        "merchant_entity_id": transaction.get("merchant_entity_id") or "",
+                        "merchant_name": transaction.get("merchant_name") or "",
+                        "confidence_level": t_confidence or "",
+                        "detailed": t_detailed or "",
+                        "pending": transaction.get("pending", False),
+                        "website": transaction.get("website") or ""
                     }
                     if frappe.db.exists("Plaid Transaction", transaction["transaction_id"]):
                         for field, value in data.items():
