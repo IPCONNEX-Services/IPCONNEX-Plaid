@@ -112,7 +112,7 @@ def loadTransactions(doc,method):
                 "currency": transaction.get("iso_currency_code", ""),
                 "date": t_date.strftime("%Y-%m-%d") if t_date else "",
                 "merchant_entity_id": transaction.get("merchant_entity_id") or "",
-                "merchant_name": transaction.get("merchant_name") or "",
+                "merchant_name": transaction.get("merchant_name") or "Unknown",
                 "confidence_level": t_confidence or "",
                 "detailed": t_detailed or "",
                 "pending": transaction.get("pending", False),
@@ -122,7 +122,7 @@ def loadTransactions(doc,method):
             t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
             if frappe.db.exists("Plaid Transaction", t_name):
                 transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
-                if transaction_doc.merchant_name : 
+                if transaction_doc.merchant_name  and transaction_doc.merchant_name!= "Unknown"  : 
                     del transaction_doc["merchant_name"]
                 transaction_doc.update(data)
                 transaction_doc.save()
@@ -174,7 +174,7 @@ def updatePlaidAccount(doc_name):
                     "currency": transaction.get("iso_currency_code", ""),
                     "date": t_date.strftime("%Y-%m-%d") if t_date else "",
                     "merchant_entity_id": transaction.get("merchant_entity_id") or "",
-                    "merchant_name": transaction.get("merchant_name") or "",
+                    "merchant_name": transaction.get("merchant_name") or "Unknown",
                     "confidence_level": t_confidence or "",
                     "detailed": t_detailed or "",
                     "pending": transaction.get("pending", False),
@@ -184,7 +184,7 @@ def updatePlaidAccount(doc_name):
                 t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
                 if frappe.db.exists("Plaid Transaction", t_name):
                     transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
-                    if transaction_doc.merchant_name : 
+                    if transaction_doc.merchant_name  and transaction_doc.merchant_name!= "Unknown"  : 
                         del transaction_doc["merchant_name"]
                     transaction_doc.update(data)
                     transaction_doc.save()
@@ -248,7 +248,7 @@ def autoUpdatePlaid():
                         "currency": transaction.get("iso_currency_code", ""),
                         "date": t_date.strftime("%Y-%m-%d") if t_date else "",
                         "merchant_entity_id": transaction.get("merchant_entity_id") or "",
-                        "merchant_name": transaction.get("merchant_name") or "",
+                        "merchant_name": transaction.get("merchant_name") or "Unknown",
                         "confidence_level": t_confidence or "",
                         "detailed": t_detailed or "",
                         "pending": transaction.get("pending", False),
@@ -257,7 +257,7 @@ def autoUpdatePlaid():
                     t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
                     if frappe.db.exists("Plaid Transaction", t_name):
                         transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
-                        if transaction_doc.merchant_name : 
+                        if transaction_doc.merchant_name  and transaction_doc.merchant_name!= "Unknown"  : 
                             del transaction_doc["merchant_name"]
                         transaction_doc.update(data)
                         transaction_doc.save()
