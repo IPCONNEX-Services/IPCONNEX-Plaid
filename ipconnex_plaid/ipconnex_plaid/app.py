@@ -122,6 +122,8 @@ def loadTransactions(doc,method):
             t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
             if frappe.db.exists("Plaid Transaction", t_name):
                 transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
+                if transaction_doc.merchant_name : 
+                    del transaction_doc["merchant_name"]
                 transaction_doc.update(data)
                 transaction_doc.save()
             else:
@@ -182,6 +184,8 @@ def updatePlaidAccount(doc_name):
                 t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
                 if frappe.db.exists("Plaid Transaction", t_name):
                     transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
+                    if transaction_doc.merchant_name : 
+                        del transaction_doc["merchant_name"]
                     transaction_doc.update(data)
                     transaction_doc.save()
                 else:
@@ -253,6 +257,8 @@ def autoUpdatePlaid():
                     t_name=transaction.get("account_id", "") + "-" + transaction.get("transaction_id", "")
                     if frappe.db.exists("Plaid Transaction", t_name):
                         transaction_doc = frappe.get_doc("Plaid Transaction", t_name)
+                        if transaction_doc.merchant_name : 
+                            del transaction_doc["merchant_name"]
                         transaction_doc.update(data)
                         transaction_doc.save()
                     else:
